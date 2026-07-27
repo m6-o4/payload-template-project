@@ -7,8 +7,8 @@ const geist = Geist({ subsets: ["latin"] });
 // primary shell for the web frontend, managing site-wide providers and layout structure
 const RootLayout = ({ children }: { children: ReactNode }) => {
 	return (
-		<html lang="en" className={geist.className}>
-			<body>{children}</body>
+		<html lang="en" suppressHydrationWarning>
+			<body className={geist.className}>{children}</body>
 		</html>
 	);
 };

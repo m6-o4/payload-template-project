@@ -14,7 +14,11 @@ const WebLayout = (props: { children: ReactNode }) => {
 
 	return (
 		<div>
-			<main>{children}</main>
+			<header>The Header Goes Here</header>
+
+			<main className="flex min-h-screen flex-col antialiased">{children}</main>
+
+			<footer className="mt-auto">The Footer Goes Here</footer>
 		</div>
 	);
 };
