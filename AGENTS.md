@@ -1,16 +1,15 @@
-<!-- BEGIN:nextjs-agent-rules -->
-
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ
 from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before
 writing any code. Heed deprecation notices.
 
-<!-- END:nextjs-agent-rules -->
-
 ## Read Before Anything Else
 
-Read in this exact order before any implementation:
+Read in this exact order once per session, before the first implementation task. Do not
+re-read the full list for every subsequent task; re-check only the file whose scope covers
+the new work (e.g. re-read `ui-tokens.md` before a new UI component, `build-plan.md`
+before a new feature).
 
 1. `context/project-overview.md`
 2. `context/architecture.md`
@@ -24,12 +23,15 @@ Read in this exact order before any implementation:
 
 ## Rules That Never Change
 
-- Never use hardcoded hex values or raw Tailwind color classes
-- Update `progress-tracker.md` and `ui-registry.md` after every feature
-- Before any third party library — load its installed skill first, then read
-  `context/library-docs.md` for project-specific rules
+- Never use hardcoded hex values or raw Tailwind color classes.
+- Update `progress-tracker.md` and `ui-registry.md` after every feature.
+- Before using any third-party library: check for an installed skill first — `/shadcn` for
+  UI components, `/payload` for CMS work. If no skill covers the library, read
+  `context/library-docs.md` for project-specific rules before writing code against it.
+- Before using any Next.js API, check `node_modules/next/dist/docs/` for deprecation
+  notices if the API isn't already documented in `context/library-docs.md`.
 - If the same problem persists after one corrective prompt — stop immediately and run
-  /recover
+  `/recover`.
 
 ## Available Skills
 
@@ -39,6 +41,7 @@ Read in this exact order before any implementation:
 - `/recover` — When something breaks after one failed correction.
 - `/remember save` — When a feature spans multiple sessions.
 - `/remember restore` — When returning after a multi-session feature.
-- `/shadcn` - To find, install, compose, and customize components using the correct APIs
-  and patterns.
-- `/payload` - Comprehensive development guidelines for Payload projects.
+- `/shadcn` — Before adding, installing, or customizing a UI component. Ensures correct
+  APIs and patterns.
+- `/payload` — Before touching a Payload collection, field, or config. Enforces project
+  conventions.
