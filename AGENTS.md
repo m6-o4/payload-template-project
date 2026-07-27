@@ -1,9 +1,10 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# Next.js: ALWAYS read docs before coding
+# This is NOT the Next.js you know
 
-Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`.
-Your training data is outdated — the docs are the source of truth.
+This version has breaking changes — APIs, conventions, and file structure may all differ
+from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before
+writing any code. Heed deprecation notices.
 
 <!-- END:nextjs-agent-rules -->
 
@@ -11,15 +12,15 @@ Your training data is outdated — the docs are the source of truth.
 
 Read in this exact order before any implementation:
 
-1. context/project-overview.md
-2. context/architecture.md
-3. context/ui-tokens.md
-4. context/ui-rules.md
-5. context/ui-registry.md
-6. context/code-standards.md
-7. context/library-docs.md
-8. context/build-plan.md
-9. context/progress-tracker.md
+1. `context/project-overview.md`
+2. `context/architecture.md`
+3. `context/ui-tokens.md`
+4. `context/ui-rules.md`
+5. `context/ui-registry.md`
+6. `context/code-standards.md`
+7. `context/library-docs.md`
+8. `context/build-plan.md`
+9. `context/progress-tracker.md`
 
 ## Rules That Never Change
 
