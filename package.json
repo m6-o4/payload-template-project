@@ -1,7 +1,7 @@
 {
 	"name": "payload-template-project",
 	"version": "1.0.0",
-	"description": "Get started quickly with Next.js, Payload, MongoDB, and Tailwind CSS.",
+	"description": "Get started quickly with Next.js, Payload CMS and MongoDB.",
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
