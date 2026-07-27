@@ -58,4 +58,6 @@ const nextConfig: NextConfig = {
 	},
 };
 
-export default withPayload(nextConfig, { devBundleServerPackages: false });
+const configWithPayload = withPayload(nextConfig, { devBundleServerPackages: false });
+
+export { configWithPayload as default };
