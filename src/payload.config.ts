@@ -1,36 +1,59 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import { globals } from "@/payload/blocks/globals";
+import { collections } from "@/payload/collections";
+import { Users } from "@/payload/collections/users/schema";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { lexical } from "@/payload/fields/lexical";
+import { resend } from "@/payload/fields/resend";
+import { plugins } from "@/payload/plugins/schema";
 import { buildConfig } from "payload";
 import sharp from "sharp";
-
-import { Users } from "./collections/Users";
-import { Media } from "./collections/Media";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-// determine the current environment to select the appropriate database connection.
-const isProduction = process.env.NODE_ENV === "production";
-const databaseURL = isProduction
-	? process.env.DATABASE_URL_PRD!
-	: process.env.DATABASE_URL_DEV!;
+// retrieve values from the environment variables.
+const databaseURL = process.env.DATABASE_URL!;
+const payloadSecret = process.env.PAYLOAD_SECRET!;
 
 export default buildConfig({
 	admin: {
-		user: Users.slug,
+		components: {
+			graphics: { Icon: "/components/payload/icon#Icon" },
+			logout: { Button: "/components/admin/custom-signout-button#CustomSignOutButton" },
+			providers: ["/components/admin/clerk-admin-provider#ClerkAdminProvider"],
+		},
+
+		// set base directory for custom component imports.
 		importMap: {
 			baseDir: path.resolve(dirname),
 		},
+		meta: {
+			icons: [
+				{
+					fetchPriority: "high",
+					rel: "icon",
+					sizes: "32x32",
+					type: "image/svg+xml",
+					url: "/favicon.svg",
+				},
+			],
+
+			// append a suffix to the browser title for all admin pages.
+			titleSuffix: " | Superior Software Solutions",
+		},
+
+		// set the users collection slug for authentication management
+		user: Users.slug,
 	},
-	collections: [Users, Media],
-	editor: lexicalEditor(),
-	secret: process.env.PAYLOAD_SECRET || "",
-	typescript: {
-		outputFile: path.resolve(dirname, "payload-types.ts"),
-	},
+	collections: collections,
 	db: mongooseAdapter({ url: databaseURL }),
+	editor: lexical,
+	email: resend,
+	globals: globals,
+	plugins: [...plugins],
+	secret: payloadSecret,
 	sharp,
-	plugins: [],
+	typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
 });

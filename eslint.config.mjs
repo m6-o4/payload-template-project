@@ -35,4 +35,4 @@ const eslintConfig = [
 	},
 ];
 
-export default eslintConfig;
+export { eslintConfig as default };

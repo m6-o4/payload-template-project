@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"lib": ["DOM", "DOM.Iterable", "ES2022"],
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -13,14 +12,14 @@
 		"isolatedModules": true,
 		"jsx": "react-jsx",
 		"incremental": true,
-		"plugins": [
-			{
-				"name": "next"
-			}
-		],
+		"plugins": [{ "name": "next" }],
 		"paths": {
 			"@/*": ["./src/*"],
-			"@payload-config": ["./src/payload.config.ts"]
+			"@/auth-root/*": ["./src/app/(auth)/*"],
+			"@/payload-root/*": ["./src/app/(payload)/*"],
+			"@/saas-root/*": ["./src/app/(saas)/*"],
+			"@/web-root/*": ["./src/app/(web)/*"],
+			"@/payload-config": ["./src/payload.config.ts"]
 		},
 		"target": "ES2022"
 	},
