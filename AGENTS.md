@@ -45,3 +45,16 @@ before a new feature).
   APIs and patterns.
 - `/payload` — Before touching a Payload collection, field, or config. Enforces project
   conventions.
+- `/clerk` — Before any Clerk work. Start here, then branch to the specific skill below.
+- `/clerk-setup` — Before wiring Clerk into a new project or framework.
+- `/clerk-nextjs-patterns` — Before writing Server Actions, `proxy.ts`, or caching logic
+  against Clerk.
+- `/clerk-backend-api` — Before calling a Clerk Backend API endpoint.
+- `/clerk-webhooks` — Before building database sync, notifications, or integrations.
+- `/clerk-orgs` — Before adding team workspaces, RBAC, or verified domains.
+- `/clerk-billing` — Before adding pricing tables, plans, per-seat billing, or `has()`
+  entitlement checks.
+- `/clerk-custom-ui` — Before building custom auth forms, styling, or branding.
+- `/clerk-cli` — Before managing users, orgs, apps, env keys, or deploy checks from the
+  terminal.
+- `/clerk-testing` — Before writing Playwright or Cypress tests against authed routes.
