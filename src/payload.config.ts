@@ -1,5 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import { globals } from "@/payload/blocks/globals";
 import { collections } from "@/payload/collections";
 import { Users } from "@/payload/collections/users/schema";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
@@ -19,16 +20,26 @@ const payloadSecret = process.env.PAYLOAD_SECRET!;
 export default buildConfig({
 	admin: {
 		components: {
-			logout: {
-				Button: "/components/admin/custom-signout-button#CustomSignOutButton",
-			},
+			graphics: { Icon: "/components/payload/icon#Icon" },
+			logout: { Button: "/components/admin/custom-signout-button#CustomSignOutButton" },
 			providers: ["/components/admin/clerk-admin-provider#ClerkAdminProvider"],
 		},
+
 		// set base directory for custom component imports.
 		importMap: {
 			baseDir: path.resolve(dirname),
 		},
 		meta: {
+			icons: [
+				{
+					fetchPriority: "high",
+					rel: "icon",
+					sizes: "32x32",
+					type: "image/svg+xml",
+					url: "/favicon.svg",
+				},
+			],
+
 			// append a suffix to the browser title for all admin pages.
 			titleSuffix: " | Superior Software Solutions",
 		},
@@ -40,6 +51,7 @@ export default buildConfig({
 	db: mongooseAdapter({ url: databaseURL }),
 	editor: lexical,
 	email: resend,
+	globals: globals,
 	plugins: [...plugins],
 	secret: payloadSecret,
 	sharp,
