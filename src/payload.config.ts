@@ -2,6 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { collections } from "@/payload/collections";
 import { Users } from "@/payload/collections/users/schema";
+import { plugins } from "@/payload/plugins/schema";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
@@ -37,7 +38,7 @@ export default buildConfig({
 	collections: collections,
 	db: mongooseAdapter({ url: databaseURL }),
 	editor: lexicalEditor(),
-	plugins: [],
+	plugins: [...plugins],
 	secret: payloadSecret,
 	sharp,
 	typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },

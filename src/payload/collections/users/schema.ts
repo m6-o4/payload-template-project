@@ -36,7 +36,7 @@ const Users: CollectionConfig = {
 	labels: { singular: "User", plural: "Users" },
 	admin: {
 		defaultColumns: ["name", "email", "role", "createdAt", "updatedAt"],
-		group: "Content",
+		group: "Globals",
 		useAsTitle: "name",
 	},
 	auth: {
