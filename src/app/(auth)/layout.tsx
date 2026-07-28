@@ -9,7 +9,7 @@ import "@/globals.css";
 const metadata: Metadata = {
 	description: "Sign in to continue.",
 	robots: { follow: false, index: false },
-	title: "Sign In",
+	title: "Sign In | Superior Software Solutions",
 };
 
 // root layout for the auth group. renders html/body directly because this

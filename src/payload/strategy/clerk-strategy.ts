@@ -39,7 +39,7 @@ const clerkStrategy: AuthStrategy = {
 			// user on payload's blank login page (disableLocalStrategy leaves
 			// no fallback UI).
 			const clerkUser = await clerkClient.users.getUser(clerkUserId);
-			const roles = (clerkUser.publicMetadata?.roles as string[]) || ["user"];
+			const role = (clerkUser.publicMetadata?.role as string) || "user";
 
 			const email = clerkUser.emailAddresses.find(
 				(e) => e.id === clerkUser.primaryEmailAddressId,
@@ -60,7 +60,7 @@ const clerkStrategy: AuthStrategy = {
 					email,
 					firstName: clerkUser.firstName || "",
 					lastName: clerkUser.lastName || "",
-					roles: roles as ("admin" | "editor" | "user")[],
+					role: role as "admin" | "editor" | "user",
 				},
 			});
 

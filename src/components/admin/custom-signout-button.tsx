@@ -12,7 +12,7 @@ const CustomSignOutButton = () => {
 
 	return (
 		<Button variant="destructive" onClick={handleSignOut}>
-			Sign Out
+			Log out
 		</Button>
 	);
 };

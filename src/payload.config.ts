@@ -14,25 +14,13 @@ const dirname = path.dirname(filename);
 const databaseURL = process.env.DATABASE_URL!;
 const payloadSecret = process.env.PAYLOAD_SECRET!;
 
-// construct the absolute url for the admin interface favicon/icon meta tag.
-const serverURL = process.env.NEXT_PUBLIC_SERVER_URL!;
-const metaIcon = process.env.NEXT_PUBLIC_META_ICON!;
-const iconURL = `${serverURL}/api/media/file/${metaIcon}`;
-
 export default buildConfig({
 	admin: {
 		components: {
-			providers: ["/components/admin/clerk-admin-provider#ClerkAdminProvider"],
 			logout: {
 				Button: "/components/admin/custom-signout-button#CustomSignOutButton",
 			},
-			views: {
-				ClerkUsersView: {
-					Component: "/components/admin/clerk-users-view#ClerkUsersView",
-					path: "/clerk-users",
-					exact: true,
-				},
-			},
+			providers: ["/components/admin/clerk-admin-provider#ClerkAdminProvider"],
 		},
 		// set base directory for custom component imports.
 		importMap: {

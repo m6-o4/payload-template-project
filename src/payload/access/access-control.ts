@@ -1,17 +1,17 @@
 import type { User } from "@/payload-types";
-import type { Access, AccessArgs } from "payload";
+import type { Access, AccessArgs, FieldAccess } from "payload";
 
-type Role = NonNullable<User["roles"]>[number];
-type MaybeUser = Pick<User, "roles"> | null | undefined;
+type Role = NonNullable<User["role"]>;
+type MaybeUser = Pick<User, "role"> | null | undefined;
 
 // narrower than Access: returns a plain boolean, never a Where filter.
 // required for collection.admin, which has no document set to filter against
 type BooleanAccess = (args: AccessArgs) => boolean;
 
-// single source of truth for role checks; roles is an array, so every gate
-// below reads through this rather than indexing it inline
+// single source of truth for role checks. one role per user, so this is an
+// equality test against the permitted set rather than an array intersection
 const hasRole = (user: MaybeUser, ...roles: Role[]): boolean =>
-	Boolean(user?.roles?.some((role) => roles.includes(role)));
+	Boolean(user?.role && roles.includes(user.role));
 
 // gate for any action that requires a signed-in user, regardless of role
 const isAuthenticated: BooleanAccess = ({ req: { user } }) => {
@@ -46,12 +46,20 @@ const isAdminOrEditor: BooleanAccess = ({ req: { user } }) => {
 	return hasRole(user, "admin", "editor");
 };
 
-// users collection read gate: staff see the full list, everyone else is scoped
-// to their own record so authenticated end users cannot enumerate the table
+// users collection gate: only admins see the full list, everyone else including
+// editors is scoped to their own record. editors retain admin-panel entry via
+// isAdminOrEditor, they simply have no business reading other people's accounts
 const isAdminOrSelf: Access = ({ req: { user } }) => {
 	if (!user) return false;
-	if (hasRole(user, "admin", "editor")) return true;
+	if (hasRole(user, "admin")) return true;
 	return { id: { equals: user.id } };
+};
+
+// field-level variant of the admin gate. FieldAccess carries a different
+// signature from Access and may only return a boolean, so the collection-level
+// isAdmin cannot be reused on individual fields
+const isAdminField: FieldAccess = ({ req: { user } }) => {
+	return hasRole(user, "admin");
 };
 
 // factory for ownership-scoped collections. pass the relation field pointing
@@ -67,6 +75,7 @@ const isAdminOrOwner =
 
 export {
 	isAdmin,
+	isAdminField,
 	isAdminOrEditor,
 	isAdminOrOwner,
 	isAdminOrSelf,

@@ -142,11 +142,12 @@ export interface Media {
  */
 export interface User {
   id: string;
-  clerkId: string;
+  clerkId?: string | null;
   email: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  roles: ('admin' | 'editor' | 'user')[];
+  password?: string | null;
+  firstName: string;
+  lastName: string;
+  role: 'admin' | 'editor' | 'user';
   name?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -251,9 +252,10 @@ export interface MediaSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   clerkId?: T;
   email?: T;
+  password?: T;
   firstName?: T;
   lastName?: T;
-  roles?: T;
+  role?: T;
   name?: T;
   updatedAt?: T;
   createdAt?: T;

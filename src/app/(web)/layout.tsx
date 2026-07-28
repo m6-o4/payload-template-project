@@ -8,7 +8,7 @@ import "@/globals.css";
 
 const metadata: Metadata = {
 	description: "A blank template using Payload in a Next.js app.",
-	title: "Payload Blank Template",
+	title: "Payload Template | Superior Software Solutions",
 };
 
 // root layout for the public site. renders html/body directly because this

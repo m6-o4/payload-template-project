@@ -1,6 +1,6 @@
 import { headers as nextHeaders } from "next/headers";
 import { getPayload } from "payload";
-import config from "@payload-config";
+import config from "@/payload-config";
 
 // resolves the payload user by running the configured auth strategies against
 // the incoming request. use this rather than clerk's auth() whenever roles or

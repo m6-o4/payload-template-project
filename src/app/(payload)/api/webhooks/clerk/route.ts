@@ -1,7 +1,8 @@
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server";
 import { getPayload } from "payload";
-import configPromise from "@payload-config";
+import configPromise from "@/payload-config";
+import { clerkWebhookContext } from "@/payload/utilities/request-context";
 
 export async function POST(req: NextRequest) {
 	let evt;
@@ -10,7 +11,7 @@ export async function POST(req: NextRequest) {
 		evt = await verifyWebhook(req);
 	} catch (err) {
 		console.error("Error verifying webhook:", err);
-		return new Response("Verification failed.", { status: 400 });
+		return new Response("Verification failed", { status: 400 });
 	}
 
 	const payload = await getPayload({ config: configPromise });
@@ -26,10 +27,10 @@ export async function POST(req: NextRequest) {
 			console.error(
 				`Clerk Webhook Error: user ${id} has no resolvable email, skipping sync.`,
 			);
-			return new Response("No resolvable email, skipped", { status: 200 });
+			return new Response("No resolvable email, skipped.", { status: 200 });
 		}
 
-		const roles = (public_metadata?.roles as string[]) || ["user"];
+		const role = (public_metadata?.role as string) || "user";
 
 		const existingUsers = await payload.find({
 			collection: "users",
@@ -39,23 +40,25 @@ export async function POST(req: NextRequest) {
 		if (existingUsers.docs.length > 0) {
 			await payload.update({
 				collection: "users",
+				context: clerkWebhookContext,
 				id: existingUsers.docs[0].id,
 				data: {
 					email: primaryEmail,
 					firstName: first_name || "",
 					lastName: last_name || "",
-					roles: roles as ("admin" | "editor" | "user")[],
+					role: role as "admin" | "editor" | "user",
 				},
 			});
 		} else {
 			await payload.create({
 				collection: "users",
+				context: clerkWebhookContext,
 				data: {
 					clerkId: id,
 					email: primaryEmail,
 					firstName: first_name || "",
 					lastName: last_name || "",
-					roles: roles as ("admin" | "editor" | "user")[],
+					role: role as "admin" | "editor" | "user",
 				},
 			});
 		}
@@ -66,6 +69,7 @@ export async function POST(req: NextRequest) {
 		if (id) {
 			await payload.delete({
 				collection: "users",
+				context: clerkWebhookContext,
 				where: { clerkId: { equals: id } },
 			});
 		}
