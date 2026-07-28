@@ -1,4 +1,4 @@
-import { isAuthenticated, isPublic } from "@/payload/access/access-control";
+import { isAdminOrEditor, isPublic } from "@/payload/access/access-control";
 import type { CollectionConfig } from "payload";
 
 const Media: CollectionConfig = {
@@ -10,18 +10,23 @@ const Media: CollectionConfig = {
 		useAsTitle: "filename",
 	},
 	access: {
-		create: isAuthenticated,
-		delete: isAuthenticated,
+		create: isAdminOrEditor,
+		delete: isAdminOrEditor,
 		read: isPublic,
-		update: isAuthenticated,
+		update: isAdminOrEditor,
 	},
 	fields: [
 		{ name: "alt", type: "text", label: "Alternative Text", required: true },
 		{ name: "caption", type: "text", label: "Caption" },
 	],
 	upload: {
-		adminThumbnail: "filename",
+		adminThumbnail: "thumbnail",
 		focalPoint: true,
+		imageSizes: [
+			{ name: "thumbnail", width: 400, height: 300, position: "centre" },
+			{ name: "card", width: 768, height: 1024, position: "centre" },
+			{ name: "hero", width: 1920, height: 1080, position: "centre" },
+		],
 		mimeTypes: [
 			"application/pdf",
 			"image/jpeg",
