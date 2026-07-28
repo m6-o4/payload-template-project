@@ -2,9 +2,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { collections } from "@/payload/collections";
 import { Users } from "@/payload/collections/users/schema";
-import { plugins } from "@/payload/plugins/schema";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexical } from "@/payload/fields/lexical";
+import { resend } from "@/payload/fields/resend";
+import { plugins } from "@/payload/plugins/schema";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
@@ -38,6 +39,7 @@ export default buildConfig({
 	collections: collections,
 	db: mongooseAdapter({ url: databaseURL }),
 	editor: lexical,
+	email: resend,
 	plugins: [...plugins],
 	secret: payloadSecret,
 	sharp,
