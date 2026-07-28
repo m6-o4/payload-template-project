@@ -4,7 +4,7 @@ import { collections } from "@/payload/collections";
 import { Users } from "@/payload/collections/users/schema";
 import { plugins } from "@/payload/plugins/schema";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { lexical } from "@/payload/fields/lexical";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
@@ -37,7 +37,7 @@ export default buildConfig({
 	},
 	collections: collections,
 	db: mongooseAdapter({ url: databaseURL }),
-	editor: lexicalEditor(),
+	editor: lexical,
 	plugins: [...plugins],
 	secret: payloadSecret,
 	sharp,
