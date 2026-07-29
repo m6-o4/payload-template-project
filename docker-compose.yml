@@ -4,7 +4,7 @@ services:
     container_name: payload-template-project
     restart: unless-stopped
     networks:
-      - traefik-network
+      - m6o4-prd-network
     env_file:
       - stack.env
     labels:
@@ -15,6 +15,6 @@ services:
       - "traefik.http.services.payload-template-project.loadbalancer.server.port=3000"
 
 networks:
-  traefik-network:
+  m6o4-prd-network:
     external: true
-    name: traefik-network
+    name: m6o4-prd-network
