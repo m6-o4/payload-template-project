@@ -42,6 +42,10 @@ next-env.d.ts
 
 /media
 
+# next-sitemap
+/public/sitemap*.xml
+/public/robots.txt
+
 # playwright
 node_modules/
 /test-results/
