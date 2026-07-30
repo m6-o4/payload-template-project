@@ -31,6 +31,14 @@ const nextConfig: NextConfig = {
 		],
 	},
 	output: "standalone",
+	outputFileTracingIncludes: {
+		"/*": [
+			"node_modules/sharp/**/*",
+			"node_modules/@img/**/*",
+			"node_modules/.pnpm/sharp@*/**/*",
+			"node_modules/.pnpm/@img*/**/*",
+		],
+	},
 	turbopack: {
 		root: path.resolve(dirname),
 		resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
