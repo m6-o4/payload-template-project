@@ -13,7 +13,7 @@ import sharp from "sharp";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-// retrieve values from the environment variables.
+// retrieve values from the environment variables
 const databaseURL = process.env.DATABASE_URL!;
 const payloadSecret = process.env.PAYLOAD_SECRET!;
 
@@ -25,7 +25,7 @@ export default buildConfig({
 			providers: ["/components/admin/clerk-admin-provider#ClerkAdminProvider"],
 		},
 
-		// set base directory for custom component imports.
+		// set base directory for custom component imports
 		importMap: {
 			baseDir: path.resolve(dirname),
 		},
@@ -40,7 +40,7 @@ export default buildConfig({
 				},
 			],
 
-			// append a suffix to the browser title for all admin pages.
+			// append a suffix to the browser title for all admin pages
 			titleSuffix: " | Superior Software Solutions",
 		},
 

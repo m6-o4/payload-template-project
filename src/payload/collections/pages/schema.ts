@@ -2,6 +2,7 @@ import {
 	isAuthenticated,
 	isAuthenticatedOrPublished,
 } from "@/payload/access/access-control";
+import { Archive } from "@/payload/blocks/archive/schema";
 import {
 	revalidateDelete,
 	revalidatePage,
@@ -62,10 +63,8 @@ const Pages: CollectionConfig<"pages"> = {
 							name: "layout",
 							type: "blocks",
 							required: true,
-							admin: {
-								initCollapsed: true,
-							},
-							blocks: [],
+							admin: { initCollapsed: true },
+							blocks: [Archive],
 						},
 					],
 				},
@@ -78,12 +77,8 @@ const Pages: CollectionConfig<"pages"> = {
 							descriptionPath: "meta.description",
 							imagePath: "meta.image",
 						}),
-						MetaTitleField({
-							hasGenerateFn: true,
-						}),
-						MetaImageField({
-							relationTo: "media",
-						}),
+						MetaTitleField({ hasGenerateFn: true }),
+						MetaImageField({ relationTo: "media" }),
 						MetaDescriptionField({}),
 						PreviewField({
 							hasGenerateFn: true,
@@ -100,10 +95,7 @@ const Pages: CollectionConfig<"pages"> = {
 			type: "date",
 			label: "Date Published",
 			admin: {
-				date: {
-					pickerAppearance: "dayOnly",
-					displayFormat: "dd MMMM yyyy",
-				},
+				date: { pickerAppearance: "dayOnly", displayFormat: "dd MMMM yyyy" },
 				position: "sidebar",
 			},
 		},

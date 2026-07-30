@@ -2,6 +2,9 @@ import {
 	isAuthenticated,
 	isAuthenticatedOrPublished,
 } from "@/payload/access/access-control";
+import { Banner } from "@/payload/blocks/banner/schema";
+import { Code } from "@/payload/blocks/code/schema";
+import { Media } from "@/payload/blocks/media/schema";
 import { populateAuthors } from "@/payload/collections/posts/hooks/populate-authors";
 import {
 	revalidateDelete,
@@ -76,7 +79,7 @@ const Posts: CollectionConfig<"posts"> = {
 									return [
 										...rootFeatures,
 										HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
-										BlocksFeature({ blocks: [] }),
+										BlocksFeature({ blocks: [Banner, Code, Media] }),
 										FixedToolbarFeature(),
 										InlineToolbarFeature(),
 										HorizontalRuleFeature(),
@@ -117,12 +120,8 @@ const Posts: CollectionConfig<"posts"> = {
 							descriptionPath: "meta.description",
 							imagePath: "meta.image",
 						}),
-						MetaTitleField({
-							hasGenerateFn: true,
-						}),
-						MetaImageField({
-							relationTo: "media",
-						}),
+						MetaTitleField({ hasGenerateFn: true }),
+						MetaImageField({ relationTo: "media" }),
 						MetaDescriptionField({}),
 						PreviewField({
 							hasGenerateFn: true,
