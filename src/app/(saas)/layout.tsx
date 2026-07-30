@@ -13,6 +13,7 @@ const metadata: Metadata = {
 	description: "Application dashboard.",
 	robots: { follow: false, index: false },
 	title: "App",
+	icons: "/favicon.png",
 };
 
 // root layout for the saas application. auth.protect() gates the whole group,

@@ -12,6 +12,7 @@ const metadata: Metadata = {
 	description: "Sign in to continue.",
 	robots: { follow: false, index: false },
 	title: "Sign In | Superior Software Solutions",
+	icons: "/favicon.png",
 };
 
 // root layout for the auth group. renders html/body directly because this
