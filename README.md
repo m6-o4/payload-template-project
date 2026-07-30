@@ -1,67 +1,113 @@
-# Payload Blank Template
+# Payload Template Project
 
-This template comes configured with the bare minimum to get started on anything you need.
+Internal starter template for building customer websites, landing pages, and SaaS
+applications on a consistent stack. Bootstrap new projects from this repo instead of
+starting from scratch — auth, CMS, storage, and UI conventions are already wired up.
 
-## Quick start
+## Stack
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+- **Framework**: [Next.js](https://nextjs.org) 16 (App Router)
+- **CMS**: [Payload CMS](https://payloadcms.com) 3
+- **Database**: MongoDB
+- **Auth**: [Clerk](https://clerk.com)
+- **Storage**: S3-compatible object storage (media uploads)
+- **Email**: [Resend](https://resend.com)
+- **UI**: Tailwind CSS 4, [shadcn/ui](https://ui.shadcn.com), Lucide icons, Motion
 
-## Quick Start - local setup
+## Requirements
 
-To spin up this template locally, follow these steps:
+- Node.js `^18.20.2` or `>=20.9.0`
+- pnpm `^9`, `^10`, or `^11`
+- A MongoDB connection string (local, Docker, or Atlas)
 
-### Clone
+## Setup
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+1. Clone the repo and install dependencies:
 
-### Development
+   ```bash
+   pnpm install
+   ```
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+2. Copy the environment file and fill in the values:
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+   ```bash
+   cp .env.example .env
+   ```
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+   | Variable | Purpose |
+   | --- | --- |
+   | `DATABASE_URL` | MongoDB connection string |
+   | `PAYLOAD_SECRET` | Payload's signing secret |
+   | `PREVIEW_SECRET` | Secret used for live preview links |
+   | `CRON_SECRET` | Secret for authenticating scheduled/cron jobs |
+   | `NEXT_PUBLIC_SERVER_URL` | Public URL the app is served from |
+   | `CLERK_SECRET_KEY` / `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk API keys |
+   | `CLERK_WEBHOOK_SIGNING_SECRET` | Verifies incoming Clerk webhooks |
+   | `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `..._SIGN_IN_FALLBACK_REDIRECT_URL`, `..._SIGN_UP_FALLBACK_REDIRECT_URL` | Clerk auth flow routing |
+   | `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_ACCESS_KEY_SECRET`, `S3_REGION`, `S3_ENDPOINT` | Media storage (S3-compatible) |
+   | `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `RESEND_FROM_NAME` | Transactional email |
 
-#### Docker (Optional)
+3. Start the dev server:
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+   ```bash
+   pnpm dev
+   ```
 
-To do so, follow these steps:
+4. Open `http://localhost:3000`. Follow the on-screen instructions to log in via
+   Clerk and complete first-run setup.
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+### Docker (optional)
 
-## How it works
+To run MongoDB locally via Docker instead of a standalone instance or Atlas:
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+1. Set `DATABASE_URL` in `.env` to `mongodb://127.0.0.1/<dbname>`.
+2. Match `<dbname>` in `docker-compose.yml`.
+3. Run `docker-compose up` (add `-d` to run in the background).
 
-### Collections
+## Available Scripts
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+| Script | Purpose |
+| --- | --- |
+| `pnpm dev` | Start the Next.js dev server |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | Run ESLint |
+| `pnpm payload` | Run the Payload CLI |
+| `pnpm generate:types` | Regenerate Payload's TypeScript types from the config |
+| `pnpm generate:importmap` | Regenerate Payload's admin import map |
 
-- #### Users (Authentication)
+Run `pnpm generate:types` after changing any collection, global, or field config so
+generated types stay in sync.
 
-  Users are auth-enabled collections that have access to the admin panel.
+## Project Structure
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+- `src/` — application code (Next.js routes, Payload config, collections, components)
+- `context/` — living documentation (architecture, UI tokens/rules, code standards,
+  build plan, progress tracker) used to keep new projects built from this template
+  consistent
+- `docker-compose.yml` — local MongoDB for Docker-based development
 
-- #### Media
+## Collections
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+- **Users** — auth-enabled collection with admin panel access, backed by Clerk.
+- **Media** — uploads collection with pre-configured image sizes and focal point
+  support, backed by S3-compatible storage.
 
-### Docker
+See the [Payload Collections docs](https://payloadcms.com/docs/configuration/collections)
+to extend either.
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+## Using This as a Starter
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+When bootstrapping a new internal project from this template:
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+1. Update `package.json` name/description and this README's title.
+2. Review `context/` and update it to describe the new project's purpose, scope, and
+   architecture — it should not still describe this template once customized.
+3. Keep the Clerk, Payload, S3, and Resend wiring unless the new project has a reason
+   to diverge — the point of the template is a consistent baseline across projects.
 
-## Questions
+## Support
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+Internal questions: ask in the team channel. For upstream framework issues, see the
+[Payload Discord](https://discord.com/invite/payload) or
+[Payload GitHub discussions](https://github.com/payloadcms/payload/discussions).
