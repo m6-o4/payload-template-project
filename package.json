@@ -1,6 +1,6 @@
 {
 	"name": "payload-template-project",
-	"version": "1.0.0",
+	"version": "1.33.0",
 	"description": "Get started quickly with Next.js, Payload CMS and MongoDB.",
 	"license": "MIT",
 	"type": "module",
