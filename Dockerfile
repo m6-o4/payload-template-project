@@ -3,19 +3,19 @@
 
 FROM node:24-alpine AS base
 
-RUN corepack enable pnpm
-
 # install dependencies only when needed
 FROM base AS deps
+
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
 # install dependencies based on pnpm
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml ./
 
 # cache mount for faster dependency install
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm i --frozen-lockfile
+    corepack enable pnpm && pnpm i --frozen-lockfile
 
 # rebuild the source code only when needed
 FROM base AS builder
@@ -25,18 +25,14 @@ WORKDIR /app
 # ARGs for next.js client-side bundling (required)
 # these MUST be real values as they are baked into the JS bundle
 ARG DATABASE_URL
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ARG NEXT_PUBLIC_SERVER_URL
 ARG PAYLOAD_SECRET
-ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
 ENV DATABASE_URL=$DATABASE_URL
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
 ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
-ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
-# fail the build early if the client-side key was never passed in
-RUN test -n "$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" \
-    || (echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY build arg is empty" && exit 1)
 
 COPY --from=deps /app/node_modules ./node_modules
 
@@ -45,7 +41,7 @@ COPY . .
 # disable telemetry during the build
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm run build
+RUN corepack enable pnpm && pnpm run build
 
 # production image, copy all the files and run next
 FROM base AS runner
@@ -73,11 +69,6 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# reinstall sharp against the musl runtime so libvips-cpp.so resolves
-# this overwrites whatever the standalone trace copied in
-RUN npm install --os=linux --libc=musl --cpu=x64 --include=optional sharp \
-    && chown -R nextjs:nodejs /app/node_modules /app/package.json
 
 USER nextjs
 
