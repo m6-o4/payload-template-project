@@ -1,12 +1,12 @@
 # check=skip=SecretsUsedInArgOrEnv
 # syntax=docker.io/docker/dockerfile:1
 
-FROM node:22-bookworm-slim AS base
+FROM node:24-alpine AS base
+
+RUN corepack enable pnpm
 
 # install dependencies only when needed
 FROM base AS deps
-
-RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
@@ -15,7 +15,6 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # cache mount for faster dependency install
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-    corepack enable pnpm && \
     pnpm i --frozen-lockfile
 
 # rebuild the source code only when needed
@@ -35,6 +34,10 @@ ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
 ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
+# fail the build early if the client-side key was never passed in
+RUN test -n "$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" \
+    || (echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY build arg is empty" && exit 1)
+
 COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .
@@ -42,7 +45,7 @@ COPY . .
 # disable telemetry during the build
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN corepack enable pnpm && pnpm run build
+RUN pnpm run build
 
 # production image, copy all the files and run next
 FROM base AS runner
@@ -70,6 +73,11 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# reinstall sharp against the musl runtime so libvips-cpp.so resolves
+# this overwrites whatever the standalone trace copied in
+RUN npm install --os=linux --libc=musl --cpu=x64 --include=optional sharp \
+    && chown -R nextjs:nodejs /app/node_modules /app/package.json
 
 USER nextjs
 
