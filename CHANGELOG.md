@@ -1,15 +1,16 @@
 # [1.35.0](https://github.com/m6-o4/payload-template-project/compare/v1.34.0...v1.35.0) (2026-07-31)
 
-
 ### Bug Fixes
 
-* **schema:** enforce slug uniqueness and restrict media MIME types ([38780e7](https://github.com/m6-o4/payload-template-project/commit/38780e702e24906f43951485185caf6c0df5cbaf))
-
+- **schema:** enforce slug uniqueness and restrict media MIME types
+  ([38780e7](https://github.com/m6-o4/payload-template-project/commit/38780e702e24906f43951485185caf6c0df5cbaf))
 
 ### Features
 
-* **payload:** add live preview and cron job support ([19abdca](https://github.com/m6-o4/payload-template-project/commit/19abdca79ce89fa5489facf4b82076df39bb7b5e))
-* **payload:** restrict content management to staff roles and add job auto-run ([1d27004](https://github.com/m6-o4/payload-template-project/commit/1d2700421b6a7139f1cecc40119e5005573abf57))
+- **payload:** add live preview and cron job support
+  ([19abdca](https://github.com/m6-o4/payload-template-project/commit/19abdca79ce89fa5489facf4b82076df39bb7b5e))
+- **payload:** restrict content management to staff roles and add job auto-run
+  ([1d27004](https://github.com/m6-o4/payload-template-project/commit/1d2700421b6a7139f1cecc40119e5005573abf57))
 
 # [1.34.0](https://github.com/m6-o4/payload-template-project/compare/v1.33.1...v1.34.0) (2026-07-30)
 

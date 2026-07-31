@@ -30,24 +30,9 @@ export default buildConfig({
 		},
 		livePreview: {
 			breakpoints: [
-				{
-					label: "Mobile",
-					name: "mobile",
-					width: 375,
-					height: 667,
-				},
-				{
-					label: "Tablet",
-					name: "tablet",
-					width: 768,
-					height: 1024,
-				},
-				{
-					label: "Desktop",
-					name: "desktop",
-					width: 1440,
-					height: 900,
-				},
+				{ label: "Mobile", name: "mobile", width: 375, height: 667 },
+				{ label: "Tablet", name: "tablet", width: 768, height: 1024 },
+				{ label: "Desktop", name: "desktop", width: 1440, height: 900 },
 			],
 		},
 		meta: {
@@ -88,12 +73,7 @@ export default buildConfig({
 				return authHeader === `Bearer ${secret}`;
 			},
 		},
-		autoRun: [
-			{
-				cron: "* * * * *",
-				limit: 10,
-			},
-		],
+		autoRun: [{ cron: "* * * * *", limit: 10 }],
 		tasks: [],
 	},
 	plugins: [...plugins],
