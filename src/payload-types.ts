@@ -211,7 +211,7 @@ export interface Page {
     image?: (string | null) | Media;
     description?: string | null;
   };
-  slug?: string | null;
+  slug: string;
   slugLock?: boolean | null;
   publishedAt?: string | null;
   updatedAt: string;
@@ -296,7 +296,7 @@ export interface Post {
     image?: (string | null) | Media;
     description?: string | null;
   };
-  slug?: string | null;
+  slug: string;
   slugLock?: boolean | null;
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
