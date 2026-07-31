@@ -1,9 +1,9 @@
 ## [1.35.1](https://github.com/m6-o4/payload-template-project/compare/v1.35.0...v1.35.1) (2026-07-31)
 
-
 ### Bug Fixes
 
-* **env:** remove hardcoded server URL from .env.example ([87f91bc](https://github.com/m6-o4/payload-template-project/commit/87f91bc1f3f40670f56da96a3f1561d957cf2274))
+- **env:** remove hardcoded server URL from .env.example
+  ([87f91bc](https://github.com/m6-o4/payload-template-project/commit/87f91bc1f3f40670f56da96a3f1561d957cf2274))
 
 # [1.35.0](https://github.com/m6-o4/payload-template-project/compare/v1.34.0...v1.35.0) (2026-07-31)
 
