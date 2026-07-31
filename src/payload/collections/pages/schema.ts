@@ -1,6 +1,6 @@
 import {
-	isAuthenticated,
-	isAuthenticatedOrPublished,
+	isAdminOrEditor,
+	isAdminOrEditorOrPublished,
 } from "@/payload/access/access-control";
 import { Archive } from "@/payload/blocks/archive/schema";
 import {
@@ -45,10 +45,10 @@ const Pages: CollectionConfig<"pages"> = {
 		useAsTitle: "title",
 	},
 	access: {
-		create: isAuthenticated,
-		delete: isAuthenticated,
-		read: isAuthenticatedOrPublished,
-		update: isAuthenticated,
+		create: isAdminOrEditor,
+		delete: isAdminOrEditor,
+		read: isAdminOrEditorOrPublished,
+		update: isAdminOrEditor,
 	},
 	defaultPopulate: { title: true, slug: true },
 	fields: [

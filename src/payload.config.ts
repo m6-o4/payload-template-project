@@ -76,19 +76,24 @@ export default buildConfig({
 	jobs: {
 		access: {
 			run: ({ req }: { req: PayloadRequest }): boolean => {
-				// allow logged in users to execute this endpoint (default)
-				if (req.user) return true;
+				// staff may trigger the queue from the admin panel
+				if (req.user?.role === "admin" || req.user?.role === "editor") return true;
 
 				const secret = cronSecret;
 				if (!secret) return false;
 
-				// if there is no logged in user, then check
-				// for the vercel cron secret to be present as an
-				// authorization header:
+				// otherwise require the cron secret as a bearer token, for an
+				// external scheduler hitting /api/payload-jobs/run directly
 				const authHeader = req.headers.get("authorization");
 				return authHeader === `Bearer ${secret}`;
 			},
 		},
+		autoRun: [
+			{
+				cron: "* * * * *",
+				limit: 10,
+			},
+		],
 		tasks: [],
 	},
 	plugins: [...plugins],

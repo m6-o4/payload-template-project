@@ -1,6 +1,6 @@
 import {
-	isAuthenticated,
-	isAuthenticatedOrPublished,
+	isAdminOrEditor,
+	isAdminOrEditorOrPublished,
 } from "@/payload/access/access-control";
 import { Banner } from "@/payload/blocks/banner/schema";
 import { Code } from "@/payload/blocks/code/schema";
@@ -55,10 +55,10 @@ const Posts: CollectionConfig<"posts"> = {
 		useAsTitle: "title",
 	},
 	access: {
-		create: isAuthenticated,
-		delete: isAuthenticated,
-		read: isAuthenticatedOrPublished,
-		update: isAuthenticated,
+		create: isAdminOrEditor,
+		delete: isAdminOrEditor,
+		read: isAdminOrEditorOrPublished,
+		update: isAdminOrEditor,
 	},
 	fields: [
 		{ name: "title", type: "text", required: true },
