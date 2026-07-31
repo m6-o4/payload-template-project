@@ -73,10 +73,19 @@ const isAdminOrOwner =
 		return { [ownerField]: { equals: user.id } };
 	};
 
+// content gate: staff see drafts, everyone else sees published entries only.
+// note this deliberately does not grant draft access to merely-authenticated
+// users, since the user role belongs to saas customers, not editors
+const isAdminOrEditorOrPublished: Access = ({ req: { user } }) => {
+	if (hasRole(user, "admin", "editor")) return true;
+	return { _status: { equals: "published" } };
+};
+
 export {
 	isAdmin,
 	isAdminField,
 	isAdminOrEditor,
+	isAdminOrEditorOrPublished,
 	isAdminOrOwner,
 	isAdminOrSelf,
 	isAuthenticated,
