@@ -28,7 +28,7 @@ const WebLayout = (props: { children: ReactNode }) => {
 				>
 					<ThemeProvider
 						attribute="class"
-						defaultTheme="dark"
+						defaultTheme="light"
 						enableSystem
 						disableTransitionOnChange
 					>
