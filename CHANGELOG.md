@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/m6-o4/payload-template-project/compare/v1.35.1...v2.0.0) (2026-08-05)
+
+
+### Bug Fixes
+
+* **theme:** change default theme from dark to light ([b3abbc5](https://github.com/m6-o4/payload-template-project/commit/b3abbc56762e29d3b8931cf75832b69829b912a5))
+
+
+### Features
+
+* **css:** add Tailwind typography plugin ([2ebe27f](https://github.com/m6-o4/payload-template-project/commit/2ebe27f308c3f2de15cc77a95adfb4b166d306cd))
+* **media:** allow SVG uploads and remove PDF ([fd94eed](https://github.com/m6-o4/payload-template-project/commit/fd94eed40287710d6c49606847bf708688e42533))
+* **payload:** add deep-merge, format-authors, get-globals utilities ([6704330](https://github.com/m6-o4/payload-template-project/commit/67043306a4d2fe90cb11d13664f2e5aa895230e3))
+
+
+### BREAKING CHANGES
+
+* **media:** PDF uploads are no longer supported.
+
 ## [1.35.1](https://github.com/m6-o4/payload-template-project/compare/v1.35.0...v1.35.1) (2026-07-31)
 
 ### Bug Fixes
