@@ -1,6 +1,6 @@
 {
 	"name": "payload-template-project",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Get started quickly with Next.js, Clerk Auth, Payload CMS and MongoDB.",
 	"license": "MIT",
 	"type": "module",

@@ -1,9 +1,9 @@
 ## [2.0.1](https://github.com/m6-o4/payload-template-project/compare/v2.0.0...v2.0.1) (2026-08-07)
 
-
 ### Bug Fixes
 
-* **auth:** allow authentication from www and non-www hosts ([22eb82f](https://github.com/m6-o4/payload-template-project/commit/22eb82fe5ab373d6081fe9608edbd1cfa06fc1d2))
+- **auth:** allow authentication from www and non-www hosts
+  ([22eb82f](https://github.com/m6-o4/payload-template-project/commit/22eb82fe5ab373d6081fe9608edbd1cfa06fc1d2))
 
 # [2.0.0](https://github.com/m6-o4/payload-template-project/compare/v1.35.1...v2.0.0) (2026-08-05)
 
